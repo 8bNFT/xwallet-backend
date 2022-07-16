@@ -31,7 +31,8 @@ class Coins{
                 ...coin,
                 id: ID,
                 price: false,
-                minimum: 1 / (10**(coin.decimals - String(coin.quantum).length + 1))
+                minimum: 1 / (10**(coin.decimals - String(coin.quantum).length + 1)),
+                precision: (coin.decimals - String(coin.quantum).length + 1)
             }
 
             symbols.push(coin.symbol)
