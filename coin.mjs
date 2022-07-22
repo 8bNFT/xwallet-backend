@@ -31,7 +31,7 @@ class Coins{
     async tryStaticInit(network){
         try{
             const { data, updated_at } = JSON.parse(fs.readFileSync(`coins_${network}.json`))
-            if(Date.now() - updated_at < 900000) return { data, updated_at }
+            if(Date.now() - updated_at < 900000) return this.coins[network] = { data, updated_at }
 
             return this.fetchTokenInformation(network)
         }catch(e){
