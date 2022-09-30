@@ -41,7 +41,7 @@ class Coins{
     }
 
     async fetchTokenInformation(network){
-        const { result } = await (await fetch(`https://api.${network == 'testnet' && 'ropsten.' || ''}x.immutable.com/v1/tokens`)).json()
+        const { result } = await (await fetch(`https://api.${network == 'testnet' && 'sandbox.' || ''}x.immutable.com/v1/tokens`)).json()
         const coins = {}
         let symbols = []
 
