@@ -1,6 +1,14 @@
 import fetch from 'node-fetch'
 import fs from 'fs'
 
+const URLS = {
+    mainnet: "https://api.x.immutable.com/v1/tokens",
+    testnet: "https://api.sandbox.x.immutable.com/v1/tokens",
+    dev: "https://api.dev.x.immutable.com/v1/tokens"
+}
+
+const getTokensURL = network => URLS[network]
+
 class Coins{
     constructor(){
         this.coins = {}
@@ -18,7 +26,7 @@ class Coins{
     }
 
     async initialize(){
-        const networks = ["mainnet", "testnet"]
+        const networks = ["mainnet", "testnet", "dev"]
         for(let network of networks){
             await this.tryStaticInit(network)
             this.interval[network] = setInterval(() => this.fetchTokenInformation(network), 900000)
@@ -35,13 +43,12 @@ class Coins{
 
             return this.fetchTokenInformation(network)
         }catch(e){
-            console.log(e)
             return this.fetchTokenInformation(network)
         }
     }
 
     async fetchTokenInformation(network){
-        const { result } = await (await fetch(`https://api.${network == 'testnet' && 'sandbox.' || ''}x.immutable.com/v1/tokens`)).json()
+        const { result } = await (await fetch(getTokensURL(network))).json()
         const coins = {}
         let symbols = []
 
